@@ -1,5 +1,6 @@
 package io.github.Rhythmatic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -8,29 +9,46 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+
+import io.github.Rhythmatic.Button;
+import io.github.Rhythmatic.Util.Collision;
 
 public class Player {
    
     Player()
     {
        
-        noteTextures = new Texture("assets/spritesheet.png");
-        buttons.put("A", new  Sprite(noteTextures, 0,0,16,16));
-        buttons.put("S", new Sprite(noteTextures, 0,0,16,16));
-        buttons.put("D", new Sprite(noteTextures, 0,0,16,16));
-        buttons.put("F", new Sprite(noteTextures,0,0,16,16));
+       buttons.put("A", new Button( new Rectangle(0, 0, 16, 16), com.badlogic.gdx.Input.Keys.A));
+       buttons.get("A").id = "A";
+       buttons.get("A").setPosition(positionX, positionY);
+      buttons.get("A").setScale(scale);
 
+      buttons.put("S", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.S));
+      buttons.get("S").id = "S";
+      buttons.get("S").setPosition(positionX + 112, positionY);
+      buttons.get("S").setScale(scale);
 
-        buttons.get("A").setPosition(positionX - 10, positionY);
-        buttons.get("A").setScale(scale);
-        buttons.get("S").setPosition(positionX * 2,positionY);
-        buttons.get("S").setScale(scale);
-        buttons.get("D").setPosition(positionX * 3,positionY);
-        buttons.get("D").setScale(scale);
-        buttons.get("F").setPosition(positionX * 4,positionY);
-        buttons.get("F").setScale(scale);
-         
+       buttons.put("D", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.D));
+      buttons.get("D").id = "D";
+      buttons.get("D").setPosition(positionX + 224, positionY);
+      buttons.get("D").setScale(scale);
 
+      buttons.put("F", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.F));
+      buttons.get("F").id = "F";
+      buttons.get("F").setPosition( + 336, positionY);
+      buttons.get("F").setScale(scale);
+
+      AABB = new Array<Rectangle>();
+      collider = new Collision();
+      
+    
+      
+       //buttons.get("A").setPosition(100, 100);
+     // buttons.get("A").setScale(0);
+      // buttons.get("A").setScale(scale);
+  
 
 
         
@@ -39,78 +57,113 @@ public class Player {
  
   private void input()
   {
-    
+   /* if(Gdx.input.isKeyJustPressed(Input.Keys.A))
+    {
+        buttons.get("A").isPressed = true;
+    }*/
+    for(Button button : buttons.values())
+    {
+      if((points > 1) && !getGotCoffee() && button.getButtonPress())
+      {
+        points--;
+      }
+    }
                 
-    if(Gdx.input.isKeyPressed(Input.Keys.A))
-    {
-        //buttons.get("A").circle(10,10, 50);
-        System.out.println("Key: A");
-        buttons.get("A").setColor(0,0,0,255);
-        hasKeyBeenPressed = true;
-    } else
-    {
-        buttons.get("A").setColor(255,255,255,255);
-
-    }
-    if(Gdx.input.isKeyPressed(Input.Keys.S))
-    {
-        System.out.println("Key: S");
-        buttons.get("S").setColor(0,0,0,255);
-        hasKeyBeenPressed = true;
-    } else
-    {
-        buttons.get("S").setColor(255,255,255,255);
-
-    }
-     if(Gdx.input.isKeyPressed(Input.Keys.D))
-    {
-        System.out.println("Key: D");
-        buttons.get("D").setColor(0,0,0,255);
-        hasKeyBeenPressed = true;
-    } else
-    {
-        buttons.get("D").setColor(255,255,255,255); 
-
-        hasKeyBeenPressed = false;
-    }
-     if(Gdx.input.isKeyPressed(Input.Keys.F))
-    {
-        System.out.println("Key: F");
-        buttons.get("F").setColor(0,0,0,255);
-        hasKeyBeenPressed = true;
-    } else
-    {
-        buttons.get("F").setColor(255,255,255,255);
-        hasKeyBeenPressed = false;
-    }
+   
   }
   public void render(SpriteBatch target)
     {
-        buttons.get("A").draw(target);
-        buttons.get("S").draw(target);
-        buttons.get("D").draw(target);
-        buttons.get("F").draw(target);
+       /*  buttons.get("A").render(target);
+        buttons.get("S").render(target);
+        buttons.get("D").render(target);
+        buttons.get("F").render(target);*/
+        for(Button button : buttons.values())
+        {
+          button.render(target);
+        }
     }
   public void update(float dt)
     {
         input();
-        System.out.println(getKeyPress().toString());
+        for(Button button : buttons.values())
+        {
+          button.update();
+        }
+        setPoints();
+      //  System.out.println(getbuttonsAABB().toString());
+       // System.out.println(getKeyPress().toString());
     }
     public void dispose()
     {
-        noteTextures.dispose();
+        /*buttons.get("A").dispose();
+        buttons.get("S").dispose();
+        buttons.get("D").dispose();
+        buttons.get("F").dispose();*/
+        for(Button button : buttons.values())
+        {
+          button.dispose();
+        }
     }
-    public Boolean getKeyPress()
+    public Array<Rectangle> getbuttonsAABB()
     {
-        return hasKeyBeenPressed;
+      AABB.clear();
+      for(Button button : buttons.values())
+      {
+        AABB.add(button.getBoundingBox());
+      }
+      return AABB;
     }
-    private HashMap<String, Sprite> buttons = new HashMap<>();
-    private Texture noteTextures;
-    private float positionX = 96; 
-    private float positionY = 100;
-    private float scale = 6;
-    private Boolean hasKeyBeenPressed = false;
 
+    public void handleCollision(ArrayList<Rectangle> noteAABBs)
+    {
+      for(Button button : buttons.values())
+      {
+        for(Rectangle AABB2 : noteAABBs)
+        {
+          if(collider.collisionDetection(button.getBoundingBox(), AABB2) && button.isPressed)
+          {
+              System.out.println("Collision has been detected");
+              button.setGotCoffee(true);
+             // points++;
+
+          }
+        }
+      }
+    }
+    public Boolean getGotCoffee()
+    {
+      Boolean bool = false;
+      for(Button button : buttons.values())
+      {
+        bool = button.getGotCoffee(); 
+      }
+      return bool;
+    }
+    public void setPoints()
+    {
+      for(Button button : buttons.values())
+      {
+        if(button.getGotCoffee())
+        {
+          points++;
+          button.setGotCoffee(false);
+        }
+      }
+    }
+    public int getPoints()
+    {
+      return points;
+    }
+
+   
+   // private HashMap<String, Sprite> buttons = new HashMap<>();
+    private HashMap<String, Button> buttons = new HashMap<>();
+    private Array<Rectangle> AABB;
+    private float positionX = 10; 
+    private float positionY = 1;
+    private float scale = 7;
+    private int points = 0;
+    private Collision collider;
 
 
 
