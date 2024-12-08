@@ -61,13 +61,13 @@ public class Player {
     {
         buttons.get("A").isPressed = true;
     }*/
-    for(Button button : buttons.values())
+   /*  for(Button button : buttons.values())
     {
-      if((points > 1) && !getGotCoffee() && button.getButtonPress())
+      if((points > 1) && !getGotCoffee() && button.getButtonPress()) find a better way to punish players
       {
         points--;
       }
-    }
+    } */
                 
    
   }
