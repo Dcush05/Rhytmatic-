@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.Rhythmatic.Player;
 import io.github.Rhythmatic.Notes;
 import io.github.Rhythmatic.NoteManager;
 import io.github.Rhythmatic.Util.Collision;
-import io.github.Rhythmatic.Util.Fps;
+import io.github.Rhythmatic.Util.SoundManager;
+import io.github.Rhythmatic.Util.BaseUI;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
@@ -23,7 +25,13 @@ public class Main extends ApplicationAdapter {
     private Notes note;
     private NoteManager notes;
     private Collision detection;
-    private Fps FPS;
+    private FpsUI FPS;
+    private PointsUI points;
+    private PointIndicatorUI messageIndicator;
+    SoundManager soundManager;
+    LevelManager levelManager; 
+
+    private Array<BaseUI> UIs;
 
 
 
@@ -35,7 +43,19 @@ public class Main extends ApplicationAdapter {
         note = new Notes();
         notes = new NoteManager();
         detection = new Collision();
-        FPS = new Fps();
+        FPS = new FpsUI();
+        points = new PointsUI();
+        messageIndicator = new PointIndicatorUI();
+        UIs = new Array<>();
+        UIs.add(FPS);
+        UIs.add(points);
+        UIs.add(messageIndicator);
+        soundManager = new SoundManager();
+        levelManager = new LevelManager(soundManager);
+        levelManager.startCurrentLevel();
+
+        
+
         //camera = new OrthographicCamera();
         //camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -49,6 +69,11 @@ public class Main extends ApplicationAdapter {
         batch.begin();
         update();
         player.render(batch);
+        //FPS.render(batch);
+        for(BaseUI UI : UIs)
+        {
+            UI.render(batch);
+        }
         //note.render(batch);
         notes.render(batch);
      //   batch.draw(image, 0, 0);
@@ -56,10 +81,14 @@ public class Main extends ApplicationAdapter {
     }
     public void update()
     {
-        System.out.println(FPS.getFps());
+       // System.out.println(FPS.getFps());
+        //FPS.render(batch);
         player.update(Gdx.graphics.getDeltaTime());
         player.handleCollision(notes.getNoteAABB());
-        System.out.println("Points " + player.getPoints());
+       // System.out.println("Points " + player.getPoints());
+        points.setPoints(player.getPoints());
+        messageIndicator.setText(player.getButtons());
+
 
 
        // note.update(Gdx.graphics.getDeltaTime());
@@ -75,6 +104,8 @@ public class Main extends ApplicationAdapter {
         player.dispose();
        // note.dispose();
        notes.dispose();
+       soundManager.dispose();
+       FPS.dispose();
         //image.dispose();
     }
 }

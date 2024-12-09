@@ -40,6 +40,9 @@ public class Button
     {
         return isPressed;
     }
+    public Boolean wasButtonPressed() {
+        return wasPressed;
+    }
     public void setGotCoffee(Boolean bool)
     {
         gotCoffee = bool;
@@ -65,7 +68,7 @@ public class Button
     }
     public void update()
     {
-        isPressed = Gdx.input.isKeyPressed(keyCode); 
+        isPressed = Gdx.input.isKeyJustPressed(keyCode); 
         if(isPressed)
         {
             buttonSprite.setColor(Color.GRAY);
@@ -77,6 +80,8 @@ public class Button
             buttonSprite.setColor(Color.WHITE);
         }
         boundingBox = new Rectangle(buttonSprite.getX(), buttonSprite.getY(), buttonSprite.getWidth(), buttonSprite.getHeight());
+        wasPressed = isPressed;
+
 
        // System.out.println(getBoundingBox().toString());
     }
@@ -92,4 +97,5 @@ public class Button
     private ShapeRenderer shape;
     private float bScale;
     private Boolean gotCoffee;
+    private Boolean wasPressed;
 }

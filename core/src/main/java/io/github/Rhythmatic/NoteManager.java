@@ -64,7 +64,7 @@ public class NoteManager {
         
         for(Notes note : notesArray)
         {
-            if(note.getPosition().y < 106)
+            if(note.getPosition().y < 50)
             {
                 notesArray.removeValue(note, true);
 

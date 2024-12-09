@@ -47,6 +47,14 @@ public class Notes {
    {
     noteSprite.setPosition(x, y);
    }
+   public void setSpeed(int speed)
+   {
+    this.speed = speed;
+   }
+   public int getSpeed()
+   {
+    return speed;
+   }
    public void update(float dt)
    {
     movement(dt);
@@ -58,7 +66,7 @@ public class Notes {
    
    public void movement(float dt)
    {
-       position.y -= 100 * dt;
+       position.y -= speed * dt;
        if (position.y < -noteSprite.getHeight()) {
             // Respawn the note at the top with a random x-coordinate
             //respawn();
@@ -67,6 +75,7 @@ public class Notes {
         // Update the sprite's position
         noteSprite.setPosition(position.x, position.y);
     }
+    
 
     private void respawn() {
         // Set the note to start from the top of the screen
@@ -99,7 +108,7 @@ public class Notes {
     }
 
 
-   private float speed = 1.f;
+   private int speed = 100;
 
    private int frequency;
    private Sprite noteSprite;

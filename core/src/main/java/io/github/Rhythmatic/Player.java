@@ -1,6 +1,7 @@
 package io.github.Rhythmatic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -14,9 +15,12 @@ import com.badlogic.gdx.utils.Array;
 
 import io.github.Rhythmatic.Button;
 import io.github.Rhythmatic.Util.Collision;
+import io.github.Rhythmatic.Util.SoundManager;
 
 public class Player {
    
+
+  public SoundManager sound;
     Player()
     {
        
@@ -42,6 +46,9 @@ public class Player {
 
       AABB = new Array<Rectangle>();
       collider = new Collision();
+      sound = new SoundManager();
+      sound.loadSound("droplet", "assets/Sound effects/droplet.mp3");
+
       
     
       
@@ -57,19 +64,20 @@ public class Player {
  
   private void input()
   {
-   /* if(Gdx.input.isKeyJustPressed(Input.Keys.A))
+  /*  if(Gdx.input.isKeyJustPressed(Input.Keys.A))
     {
         buttons.get("A").isPressed = true;
     }*/
-   /*  for(Button button : buttons.values())
+    for(Button button : buttons.values())
     {
-      if((points > 1) && !getGotCoffee() && button.getButtonPress()) find a better way to punish players
+      if((points > 1) && !getGotCoffee() && button.getButtonPress()) //find a better way to punish players
       {
         points--;
-      }
-    } */
+      } 
+    } 
                 
-   
+  
+
   }
   public void render(SpriteBatch target)
     {
@@ -103,6 +111,7 @@ public class Player {
         {
           button.dispose();
         }
+        sound.dispose(); 
     }
     public Array<Rectangle> getbuttonsAABB()
     {
@@ -123,10 +132,11 @@ public class Player {
           if(collider.collisionDetection(button.getBoundingBox(), AABB2) && button.isPressed)
           {
               System.out.println("Collision has been detected");
+              sound.playSound("droplet", 0.5f, false);
               button.setGotCoffee(true);
              // points++;
 
-          }
+          } 
         }
       }
     }
@@ -154,6 +164,14 @@ public class Player {
     {
       return points;
     }
+    public Array<Button> getButtons() {
+      Collection<Button> buttonCollection = buttons.values();
+      Array<Button> buttonArray = new Array<Button>(buttonCollection.size());
+      for (Button button : buttonCollection) {
+        buttonArray.add(button);
+      }
+    return buttonArray;
+  }
 
    
    // private HashMap<String, Sprite> buttons = new HashMap<>();
@@ -164,6 +182,7 @@ public class Player {
     private float scale = 7;
     private int points = 0;
     private Collision collider;
+
 
 
 
