@@ -13,16 +13,20 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Notes {
+     private static final float SPEED_FACTOR = 0.1f; // Adjust this factor to control the speed
+
    Notes()
    {
     //for now only have one sprite that we are rendering howveer in the future we will have an array of sprites that we will be rendering based on songs data
     defaultTexture = new Texture("assets/spritesheet.png");
     noteSprite = new Sprite(defaultTexture, 64,0, 16, 16);
-    noteSprite.setSize(noteSprite.getWidth() * 2, noteSprite.getHeight() * 2);
+    noteSprite.setSize(noteSprite.getWidth() * 3, noteSprite.getHeight() * 3);
+   // noteSprite.setScale(1);
     
     
     position = new Vector2();
     respawn();
+    setBPM(145);
 
    }
 
@@ -47,14 +51,24 @@ public class Notes {
    {
     noteSprite.setPosition(x, y);
    }
-   public void setSpeed(int speed)
-   {
+   public void setSpeed(int speed) {
     this.speed = speed;
-   }
-   public int getSpeed()
-   {
-    return speed;
-   }
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setBPM(int bpm) {
+        this.bpm = bpm;
+        calculateSpeedFromBPM();
+    }
+
+    private void calculateSpeedFromBPM() {
+        float secondsPerBeat = 60f / bpm;
+        // Assuming you want the note to travel the height of the screen in one beat
+        speed = (int) ((Gdx.graphics.getHeight() / secondsPerBeat) * SPEED_FACTOR);
+    }
    public void update(float dt)
    {
     movement(dt);
@@ -109,6 +123,7 @@ public class Notes {
 
 
    private int speed = 100;
+   private int bpm = 136; // Default BPM
 
    private int frequency;
    private Sprite noteSprite;

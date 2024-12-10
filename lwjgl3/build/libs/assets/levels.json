@@ -1,0 +1,11 @@
+{
+    "levels": [
+      {
+        "levelNumber": 1,
+        "musicName": "level1",
+        "filePath": "assets/Music/HeartToHeart.mp3",
+        "duration": 120.0
+      }
+    ]
+  }
+  

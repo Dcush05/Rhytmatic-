@@ -82,6 +82,7 @@ public class NoteManager {
             float y = heights[lane];
             Notes note = new Notes();
             note.setPosition(x, y);
+            
             notesArray.add(note);
         }
     }
