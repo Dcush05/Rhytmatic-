@@ -9,6 +9,8 @@ Fonts/Pixelify_Sans/static/PixelifySans-SemiBold.ttf
 Music/11TheFoolOnTheHill.mp3
 Music/HeartToHeart.mp3
 Sound effects/droplet.mp3
+coffee_bg.png
 levels.json
 libgdx.png
+menu_screen.png
 spritesheet.png

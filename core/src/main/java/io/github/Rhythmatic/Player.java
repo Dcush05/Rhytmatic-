@@ -23,31 +23,31 @@ public class Player {
   public SoundManager sound;
     Player()
     {
-       
-       buttons.put("A", new Button( new Rectangle(0, 0, 16, 16), com.badlogic.gdx.Input.Keys.A));
-       buttons.get("A").id = "A";
-       buttons.get("A").setPosition(positionX, positionY);
-      buttons.get("A").setScale(scale);
-
-      buttons.put("S", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.S));
-      buttons.get("S").id = "S";
-      buttons.get("S").setPosition(positionX + 112, positionY);
-      buttons.get("S").setScale(scale);
-
-       buttons.put("D", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.D));
-      buttons.get("D").id = "D";
-      buttons.get("D").setPosition(positionX + 224, positionY);
-      buttons.get("D").setScale(scale);
+      buttons = new HashMap<>();
+       buttons.put("D", new Button( new Rectangle(0, 0, 16, 16), com.badlogic.gdx.Input.Keys.D));
+       buttons.get("D").id = "D";
+       buttons.get("D").setPosition(positionX, positionY);
+       buttons.get("D").setScale(scale);
 
       buttons.put("F", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.F));
       buttons.get("F").id = "F";
-      buttons.get("F").setPosition( + 336, positionY);
+      buttons.get("F").setPosition(positionX + 112, positionY);
       buttons.get("F").setScale(scale);
+
+       buttons.put("J", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.J));
+      buttons.get("J").id = "J";
+      buttons.get("J").setPosition(positionX + 224, positionY);
+      buttons.get("J").setScale(scale);
+
+      buttons.put("K", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.K));
+      buttons.get("K").id = "K";
+      buttons.get("K").setPosition(positionX+ 336, positionY);
+      buttons.get("K").setScale(scale);
 
       AABB = new Array<Rectangle>();
       collider = new Collision();
       sound = new SoundManager();
-      sound.loadSound("droplet", "assets/Sound effects/droplet.mp3");
+      sound.loadSound("droplet", "Sound effects/droplet.mp3");
 
       
     
@@ -175,10 +175,10 @@ public class Player {
 
    
    // private HashMap<String, Sprite> buttons = new HashMap<>();
-    private HashMap<String, Button> buttons = new HashMap<>();
+    private HashMap<String, Button> buttons;
     private Array<Rectangle> AABB;
     private float positionX = 10; 
-    private float positionY = 1;
+    private float positionY = 15;
     private float scale = 7;
     private int points = 0;
     private Collision collider;

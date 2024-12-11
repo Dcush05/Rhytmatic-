@@ -64,7 +64,7 @@ public class NoteManager {
         
         for(Notes note : notesArray)
         {
-            if(note.getPosition().y < 50)
+            if(note.getPosition().y < 56)
             {
                 notesArray.removeValue(note, true);
 
@@ -103,6 +103,17 @@ public class NoteManager {
             if(note.getPosition().y < 0 )
         }
     }*/
+    public void setSpawnTimer(float timer)
+    {
+        spawnTimer = timer;
+    }
+    public void setBPM(int speed)
+    {
+        for(Notes note : notesArray)
+        {
+            note.setBPM(speed);
+        }
+    }
 
 
     public void dispose() {

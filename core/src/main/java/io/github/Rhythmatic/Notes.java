@@ -18,15 +18,15 @@ public class Notes {
    Notes()
    {
     //for now only have one sprite that we are rendering howveer in the future we will have an array of sprites that we will be rendering based on songs data
-    defaultTexture = new Texture("assets/spritesheet.png");
+    defaultTexture = new Texture("spritesheet.png");
     noteSprite = new Sprite(defaultTexture, 64,0, 16, 16);
-    noteSprite.setSize(noteSprite.getWidth() * 3, noteSprite.getHeight() * 3);
+    noteSprite.setSize(noteSprite.getWidth() * 2f, noteSprite.getHeight() * 2f);
    // noteSprite.setScale(1);
     
     
     position = new Vector2();
     respawn();
-    setBPM(145);
+    //setBPM(50);
 
    }
 
