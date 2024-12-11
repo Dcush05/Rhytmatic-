@@ -1,6 +1,7 @@
 package io.github.Rhythmatic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,10 +11,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import io.github.Rhythmatic.Util.BaseUI;
 import io.github.Rhythmatic.Util.SoundManager;
+import io.github.Rhythmatic.Util.*;;
 
 
 public class GameScreen implements Screen {
-    //TODO *starting 12/10/24: Create Junit tests(score checking, Game checking, etc), Menu System(Play, levels(contain diffferent tasks to do), quit button), setting up levels 
+    //TODO *starting 12/10/24: Create Junit tests(score checking, Game checking, etc), *Menu System(Play, levels(contain diffferent tasks to do), quit button), *setting up levels, Serialization,
+    // UI to display timer
     //network programming(sending scores to server if the server is up)
     private Main game;
     private SpriteBatch batch;
@@ -26,8 +29,11 @@ public class GameScreen implements Screen {
     private FpsUI FPS;
     private PointsUI points;
     private PointIndicatorUI messageIndicator;
+    private int levelIndex;
+    private TimerUI timerUI;
 
-    public GameScreen(Main game2) {
+
+    public GameScreen(Main game2, int levelIndex) {
         this.game = game2;
         this.batch = new SpriteBatch();
         this.player = new Player();
@@ -42,7 +48,10 @@ public class GameScreen implements Screen {
         UIs.add(FPS);
         UIs.add(points);
         UIs.add(messageIndicator);
-        notes.setBPM(levelManager.getCurrentLevel().getBPM());
+        this.levelIndex = levelIndex;
+        levelManager.setLevel(levelIndex);
+        
+       // notes.setBPM(levelManager.getCurrentLevel().getBPM());
     }
 
     
@@ -50,6 +59,14 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         levelManager.startCurrentLevel();
+        Level currentLevel = levelManager.getCurrentLevel();
+        if (currentLevel != null) {
+            notes.setBPM(currentLevel.getBPM());
+            this.timerUI = new TimerUI((long) currentLevel.getDuration());
+            UIs.add(timerUI);
+
+
+        }
     }
 
     @Override
@@ -73,6 +90,7 @@ public class GameScreen implements Screen {
         points.setPoints(player.getPoints());
         messageIndicator.setText(player.getButtons());
         notes.update(Gdx.graphics.getDeltaTime(), player.getGotCoffee());
+        
     }
 
     @Override
@@ -90,10 +108,17 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        levelManager.dispose();
         player.dispose();
         notes.dispose();
         soundManager.dispose();
         FPS.dispose();
         image.dispose();
+        for(BaseUI UIs : UIs)
+        {
+            UIs.dispose();
+        }
+
+
     }
 }

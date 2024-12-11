@@ -13,4 +13,9 @@ coffee_bg.png
 levels.json
 libgdx.png
 menu_screen.png
+rhythmatic_start.png
 spritesheet.png
+task1.png
+task_2.png
+task_3.png
+task_selector.png

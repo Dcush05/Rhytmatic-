@@ -9,9 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeType.Bitmap;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 
-
 public interface UI {
-   
     
     void render(SpriteBatch target);
     void input();

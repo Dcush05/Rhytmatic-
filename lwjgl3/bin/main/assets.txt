@@ -6,8 +6,16 @@ Fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf
 Fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf
 Fonts/Pixelify_Sans/static/PixelifySans-Regular.ttf
 Fonts/Pixelify_Sans/static/PixelifySans-SemiBold.ttf
+Music/11TheFoolOnTheHill.mp3
 Music/HeartToHeart.mp3
 Sound effects/droplet.mp3
+coffee_bg.png
 levels.json
 libgdx.png
+menu_screen.png
+rhythmatic_start.png
 spritesheet.png
+task1.png
+task_2.png
+task_3.png
+task_selector.png

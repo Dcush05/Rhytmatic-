@@ -22,7 +22,7 @@ public class LevelManager{
         this.soundManager = soundManager;
         this.game = game;
         levels = new ArrayList<>();
-        currentLevelIndex = 0;
+       // currentLevelIndex = 0;
         scheduler = Executors.newScheduledThreadPool(1);
         loadLevels();
     }
@@ -87,15 +87,27 @@ public class LevelManager{
 
     private void endLevel() {
         soundManager.dispose();
+        game.dispose();
         game.setScreen(new LevelSelectorScreen(game));
     }
 
+    public void dispose()
+    {
+        /*soundManager.dispose();
+        game.dispose();
+        scheduler.shutdownNow();*/
+
+    }
     public void stopTimer() {
         scheduler.shutdownNow();
     }
     public List<Level> getLevels()
     {
         return levels;
+    }
+    public void setLevel(int levelIndex)
+    {
+        currentLevelIndex = levelIndex;
     }
 
     private static class LevelsData {
