@@ -24,6 +24,7 @@ public class LevelSelectorScreen implements Screen {
 
     public LevelSelectorScreen(Main game) {
         this.game = game;
+        //this.playerName = playerName;
         this.batch = new SpriteBatch();
         this.levelSelectorScreen = new Texture("task_selector.png");
         this.task1Button = new Texture("task1.png");
@@ -32,13 +33,13 @@ public class LevelSelectorScreen implements Screen {
 
         // Set button positions
         task1ButtonX = Gdx.graphics.getWidth() / 2f - task1Button.getWidth() / 2f;
-        task1ButtonY = Gdx.graphics.getHeight() / 2f + 100;
+        task1ButtonY = task1Button.getHeight() + 200;
 
         task2ButtonX = Gdx.graphics.getWidth() / 2f - task2Button.getWidth() / 2f;
-        task2ButtonY = Gdx.graphics.getHeight() / 2f;
+        task2ButtonY = task1Button.getHeight() + 150;
 
         task3ButtonX = Gdx.graphics.getWidth() / 2f - task3Button.getWidth() / 2f;
-        task3ButtonY = Gdx.graphics.getHeight() / 2f - 100;
+        task3ButtonY = task1Button.getHeight() + 100;
     }
 
     @Override
@@ -72,12 +73,13 @@ public class LevelSelectorScreen implements Screen {
             // Check if task2 button is pressed
             if (mouseX >= task2ButtonX && mouseX <= task2ButtonX + task2Button.getWidth() &&
                 mouseY >= task2ButtonY && mouseY <= task2ButtonY + task2Button.getHeight()) {
-                game.setScreen(new GameScreen(game,1 ));
+                game.setScreen(new GameScreen(game,1));
             }
 
             // Check if task3 button is pressed
             if (mouseX >= task3ButtonX && mouseX <= task3ButtonX + task3Button.getWidth() &&
                 mouseY >= task3ButtonY && mouseY <= task3ButtonY + task3Button.getHeight()) {
+                
                 game.setScreen(new GameScreen(game, 2));
             }
         }

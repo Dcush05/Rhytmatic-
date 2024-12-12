@@ -11,7 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import io.github.Rhythmatic.Util.BaseUI;
 import io.github.Rhythmatic.Util.SoundManager;
-import io.github.Rhythmatic.Util.*;;
+import io.github.Rhythmatic.Util.*;
+
 
 
 public class GameScreen implements Screen {
@@ -20,7 +21,7 @@ public class GameScreen implements Screen {
     //network programming(sending scores to server if the server is up)
     private Main game;
     private SpriteBatch batch;
-    private Player player;
+    public Player player;
     private Texture image;
     private NoteManager notes;
     private Array<BaseUI> UIs;
@@ -31,12 +32,14 @@ public class GameScreen implements Screen {
     private PointIndicatorUI messageIndicator;
     private int levelIndex;
     private TimerUI timerUI;
+    private Serialization save;
 
 
     public GameScreen(Main game2, int levelIndex) {
         this.game = game2;
         this.batch = new SpriteBatch();
-        this.player = new Player();
+
+        this.player = new Player(MenuScreen.playerName);
         this.image = new Texture("coffee_bg.png");
         this.notes = new NoteManager();
         this.soundManager = new SoundManager();
@@ -50,8 +53,10 @@ public class GameScreen implements Screen {
         UIs.add(messageIndicator);
         this.levelIndex = levelIndex;
         levelManager.setLevel(levelIndex);
+        save = new Serialization();
         
        // notes.setBPM(levelManager.getCurrentLevel().getBPM());
+       System.out.println(player.getName());
     }
 
     
@@ -90,6 +95,13 @@ public class GameScreen implements Screen {
         points.setPoints(player.getPoints());
         messageIndicator.setText(player.getButtons());
         notes.update(Gdx.graphics.getDeltaTime(), player.getGotCoffee());
+        levelManager.update(Gdx.graphics.getDeltaTime());
+        if(levelManager.getLevelFinish())
+        {
+            save.saveData(player, levelManager, "data.dat");
+
+        }
+       
         
     }
 
@@ -107,6 +119,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+
         batch.dispose();
         levelManager.dispose();
         player.dispose();

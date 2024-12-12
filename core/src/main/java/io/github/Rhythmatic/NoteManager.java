@@ -39,7 +39,7 @@ public class NoteManager {
         for (Notes note : notesArray) {
             note.update(dt);
         }
-        destroyNote(isContained);
+        //destroyNote(isContained);
     }
     private float getRandomSpawnInterval() {
         return spawnInterval + random.nextFloat(); // Adds a random float between 0 and 1 to the base interval

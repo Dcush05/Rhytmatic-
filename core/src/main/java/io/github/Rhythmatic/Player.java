@@ -21,28 +21,30 @@ public class Player {
    
 
   public SoundManager sound;
-    Player()
+  private String playerName;
+    Player(String name)
     {
+      playerName = name;
       buttons = new HashMap<>();
        buttons.put("D", new Button( new Rectangle(0, 0, 16, 16), com.badlogic.gdx.Input.Keys.D));
        buttons.get("D").id = "D";
        buttons.get("D").setPosition(positionX, positionY);
        buttons.get("D").setScale(scale);
 
-      buttons.put("F", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.F));
+      buttons.put("F", new Button(new Rectangle(16,0,16,16), com.badlogic.gdx.Input.Keys.F));
       buttons.get("F").id = "F";
       buttons.get("F").setPosition(positionX + 112, positionY);
       buttons.get("F").setScale(scale);
 
-       buttons.put("J", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.J));
-      buttons.get("J").id = "J";
-      buttons.get("J").setPosition(positionX + 224, positionY);
-      buttons.get("J").setScale(scale);
-
-      buttons.put("K", new Button(new Rectangle(0,0,16,16), com.badlogic.gdx.Input.Keys.K));
+       buttons.put("K", new Button(new Rectangle(32,0,16,16), com.badlogic.gdx.Input.Keys.K));
       buttons.get("K").id = "K";
-      buttons.get("K").setPosition(positionX+ 336, positionY);
+      buttons.get("K").setPosition(positionX + 224, positionY);
       buttons.get("K").setScale(scale);
+
+      buttons.put("L", new Button(new Rectangle(48,0,16,16), com.badlogic.gdx.Input.Keys.L));
+      buttons.get("L").id = "L";
+      buttons.get("L").setPosition(positionX+ 336, positionY);
+      buttons.get("L").setScale(scale);
 
       AABB = new Array<Rectangle>();
       collider = new Collision();
@@ -172,6 +174,14 @@ public class Player {
       }
     return buttonArray;
   }
+    public void setName(String name)
+    {
+      playerName = name;
+    }
+    public String getName()
+    {
+    return playerName;
+    }
 
    
    // private HashMap<String, Sprite> buttons = new HashMap<>();

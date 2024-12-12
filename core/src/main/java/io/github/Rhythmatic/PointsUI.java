@@ -16,7 +16,7 @@ public class PointsUI extends BaseUI {
    @Override
    public void render(SpriteBatch target) {
       // TODO Auto-generated method stub
-      font12.draw(target, "Points: " + points, 370, 800);
+      font12.draw(target, "Points: " + points, 367, 800);
    }
    @Override
    public void input() {

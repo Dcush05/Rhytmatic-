@@ -7,23 +7,25 @@ import com.badlogic.gdx.utils.Json;
 import io.github.Rhythmatic.Util.SoundManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-public class LevelManager{
+public class LevelManager {
     private List<Level> levels;
     private int currentLevelIndex;
     private SoundManager soundManager;
-    private ScheduledExecutorService scheduler;
+    
+    private float elapsedTime;  // Time passed since the level started (in seconds)
+    private float levelDuration; // Duration of the level in seconds
+    private boolean isLevelFinished;
+    
     private Main game;
 
     public LevelManager(SoundManager soundManager, Main game) {
         this.soundManager = soundManager;
         this.game = game;
+        this.isLevelFinished = false;
+        this.elapsedTime = 0f; // Initialize elapsed time to 0
+        this.levelDuration = 0f; // Duration is not set initially
         levels = new ArrayList<>();
-       // currentLevelIndex = 0;
-        scheduler = Executors.newScheduledThreadPool(1);
         loadLevels();
     }
 
@@ -66,48 +68,46 @@ public class LevelManager{
         if (currentLevel != null) {
             soundManager.loadSound(currentLevel.getMusicName(), currentLevel.getFilePath());
             soundManager.playSound(currentLevel.getMusicName(), 1.0f, false);
-            startTimer((long)currentLevel.getDuration());
+            this.levelDuration = (float) currentLevel.getDuration();  // Set the level's duration
+            this.elapsedTime = 0f;  // Reset the elapsed time to 0 at the start of the level
         }
     }
 
-    private void startTimer(long duration) {
-        scheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        endLevel();
-                    }
-                });
+    public void update(float deltaTime) {
+        if (!isLevelFinished) {
+            elapsedTime += deltaTime;  // Update the elapsed time with the time passed in this frame
+            
+            if (elapsedTime >= levelDuration) {
+                endLevel();
             }
-        }, duration, TimeUnit.SECONDS);
-        System.out.println(duration);
+        }
     }
 
     private void endLevel() {
+        isLevelFinished = true;
         soundManager.dispose();
-        game.dispose();
         game.setScreen(new LevelSelectorScreen(game));
     }
 
-    public void dispose()
-    {
-        /*soundManager.dispose();
-        game.dispose();
-        scheduler.shutdownNow();*/
+    public Boolean getLevelFinish() {
+        return isLevelFinished;
+    }
 
+    public void dispose() {
+        soundManager.dispose();
+        game.dispose();
     }
-    public void stopTimer() {
-        scheduler.shutdownNow();
-    }
-    public List<Level> getLevels()
-    {
+
+    public List<Level> getLevels() {
         return levels;
     }
-    public void setLevel(int levelIndex)
-    {
+
+    public void setLevel(int levelIndex) {
         currentLevelIndex = levelIndex;
+    }
+
+    public String getLevelData() {
+        return "Task: " + currentLevelIndex;
     }
 
     private static class LevelsData {

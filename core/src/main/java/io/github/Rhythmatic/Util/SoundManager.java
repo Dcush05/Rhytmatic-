@@ -39,11 +39,19 @@ public class SoundManager {
             System.err.println("Error: Music '" + soundName + "' not loaded.");
         }
     }
+     public void stopAllSounds() {
+        for (Music music : musicMap.values()) {
+            if (music.isPlaying()) {
+                music.stop();
+            }
+        }
+    }
 
     public void stopSound(String soundName) {
         Music music = musicMap.get(soundName);
         if (music != null && music.isPlaying()) {
             music.stop();
+            
         }
     }
         
@@ -51,6 +59,7 @@ public class SoundManager {
 
     public void dispose() {
         for (Music music : musicMap.values()) {
+            music.stop();
             music.dispose();
         }
         musicMap.clear();

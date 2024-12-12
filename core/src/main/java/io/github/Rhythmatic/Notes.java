@@ -66,7 +66,7 @@ public class Notes {
 
     private void calculateSpeedFromBPM() {
         float secondsPerBeat = 60f / bpm;
-        // Assuming you want the note to travel the height of the screen in one beat
+
         speed = (int) ((Gdx.graphics.getHeight() / secondsPerBeat) * SPEED_FACTOR);
     }
    public void update(float dt)
@@ -81,10 +81,7 @@ public class Notes {
    public void movement(float dt)
    {
        position.y -= speed * dt;
-       if (position.y < -noteSprite.getHeight()) {
-            // Respawn the note at the top with a random x-coordinate
-            //respawn();
-        }
+       
        // System.out.println(getAABB().toString());
         // Update the sprite's position
         noteSprite.setPosition(position.x, position.y);
@@ -123,7 +120,7 @@ public class Notes {
 
 
    private int speed = 100;
-   private int bpm = 136; // Default BPM
+   private int bpm = 100; // Default BPM
 
    private int frequency;
    private Sprite noteSprite;
