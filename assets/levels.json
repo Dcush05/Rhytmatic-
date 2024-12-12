@@ -3,14 +3,14 @@
       {
         "levelNumber": 1,
         "musicName": "level1",
-        "filePath": "assets/Music/11TheFoolOnTheHill.mp3",
+        "filePath": "Music/11TheFoolOnTheHill.mp3",
         "duration": 182.0, 
         "BPM": 73
       },
       {
         "levelNumber":2,
         "musicName": "level2",
-        "filePath": "assets/Music/HeartToHeart.mp3",
+        "filePath": "Music/HeartToHeart.mp3",
         "duration": 211.0,
         "BPM": 75
       }

@@ -19,7 +19,7 @@ public class Button
     {
             isPressed = false;
             gotCoffee = false;
-            noteTextures = new Texture("assets/spritesheet.png");
+            noteTextures = new Texture("spritesheet.png");
             this.srcRect = srcRect;
             this.keyCode = keyCode;
             buttonSprite = new Sprite(noteTextures);

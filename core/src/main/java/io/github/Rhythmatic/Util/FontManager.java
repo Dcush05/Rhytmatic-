@@ -9,7 +9,7 @@ public class FontManager {
     private static BitmapFont font12;
 
     static {
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/PixelifySans.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PixelifySans.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 25;  
         font12 = generator.generateFont(parameter);
